@@ -25,13 +25,12 @@ DROP TABLE IF EXISTS `account`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `account` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `charNum` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `id_UNIQUE` (`id`),
+  PRIMARY KEY (`username`),
   UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='UserAccount Table	';
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -43,6 +42,60 @@ CREATE TABLE `account` (
 LOCK TABLES `account` WRITE;
 /*!40000 ALTER TABLE `account` DISABLE KEYS */;
 /*!40000 ALTER TABLE `account` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `character`
+--
+
+DROP TABLE IF EXISTS `character`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `character` (
+  `Id` int(11) NOT NULL,
+  `exp` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `class` varchar(255) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
+  `faction` varchar(255) DEFAULT NULL,
+  `race_id` int(11) DEFAULT NULL,
+  `alignment` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `id_idx` (`race_id`),
+  CONSTRAINT `id` FOREIGN KEY (`race_id`) REFERENCES `race` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Character Info Table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `character`
+--
+
+LOCK TABLES `character` WRITE;
+/*!40000 ALTER TABLE `character` DISABLE KEYS */;
+/*!40000 ALTER TABLE `character` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `race`
+--
+
+DROP TABLE IF EXISTS `race`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `race` (
+  `id` int(11) NOT NULL,
+  `race_name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Race Table';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `race`
+--
+
+LOCK TABLES `race` WRITE;
+/*!40000 ALTER TABLE `race` DISABLE KEYS */;
+/*!40000 ALTER TABLE `race` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -62,4 +115,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-17  8:22:29
+-- Dump completed on 2018-10-17 10:58:07
