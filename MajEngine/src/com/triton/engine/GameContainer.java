@@ -1,10 +1,13 @@
 package com.triton.engine;
 
+import java.awt.event.KeyEvent;
+
 public class GameContainer implements Runnable {
 
 	private Thread thread;
 	private Window window;
 	private Renderer renderer;
+	private Input input;
 
 	private boolean running = false;
 	private final double UPDATE_CAP = 1.0 / 60.0;
@@ -20,8 +23,9 @@ public class GameContainer implements Runnable {
 
 		window = new Window(this);
 		renderer = new Renderer(this);
-
+		input = new Input(this);
 		thread = new Thread(this);
+
 		thread.run();
 	}
 
@@ -55,6 +59,8 @@ public class GameContainer implements Runnable {
 
 				unprocessedTime -= UPDATE_CAP;
 				render = true;
+
+				input.update();
 
 				// TODO Update game
 				if (frameTime >= 1.0) {

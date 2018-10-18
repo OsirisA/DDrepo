@@ -52,5 +52,9 @@ public class Window {
 	public Canvas getCanvas() {
 		return canvas;
 	}
+
+	public JFrame getFrame() {
+		return frame;
+	}
 	
 }
