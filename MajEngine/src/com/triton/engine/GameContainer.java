@@ -4,11 +4,12 @@ public class GameContainer implements Runnable {
 
 	private Thread thread;
 	private Window window;
-	
+	private Renderer renderer;
+
 	private boolean running = false;
 	private final double UPDATE_CAP = 1.0 / 60.0;
-	private int width =320 , height =240;
-	private float scale = 4f;
+	private int width = 320, height = 240;
+	private float scale = 3f;
 	private String title = "My first Game v1.0";
 
 	public GameContainer() {
@@ -18,7 +19,8 @@ public class GameContainer implements Runnable {
 	public void start() {
 
 		window = new Window(this);
-		
+		renderer = new Renderer(this);
+
 		thread = new Thread(this);
 		thread.run();
 	}
@@ -39,9 +41,9 @@ public class GameContainer implements Runnable {
 		int frames = 0;
 		int fps = 0;
 		while (running) {
-			
+
 			render = false;
-			
+
 			firstTime = System.nanoTime() / 1000000000.0;
 			passedTime = firstTime - lastTime;
 			lastTime = firstTime;
@@ -50,7 +52,7 @@ public class GameContainer implements Runnable {
 			frameTime += passedTime;
 
 			while (unprocessedTime >= UPDATE_CAP) {
-				
+
 				unprocessedTime -= UPDATE_CAP;
 				render = true;
 
@@ -63,6 +65,7 @@ public class GameContainer implements Runnable {
 				}
 
 				if (render) {
+					renderer.clear();
 					window.update();
 					frames++;
 				} else {
@@ -125,5 +128,9 @@ public class GameContainer implements Runnable {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	public Window getWindow() {
+		return window;
 	}
 }
