@@ -1,13 +1,12 @@
 package com.triton.engine;
 
-import java.awt.event.KeyEvent;
-
 public class GameContainer implements Runnable {
 
 	private Thread thread;
 	private Window window;
 	private Renderer renderer;
 	private Input input;
+	private AbstractGame game;
 
 	private boolean running = false;
 	private final double UPDATE_CAP = 1.0 / 60.0;
@@ -15,8 +14,8 @@ public class GameContainer implements Runnable {
 	private float scale = 3f;
 	private String title = "My first Game v1.0";
 
-	public GameContainer() {
-
+	public GameContainer(AbstractGame game) {
+		this.game = game;
 	}
 
 	public void start() {
@@ -59,7 +58,9 @@ public class GameContainer implements Runnable {
 
 				unprocessedTime -= UPDATE_CAP;
 				render = true;
-
+				
+				game.update(this, (float)UPDATE_CAP);
+				
 				input.update();
 
 				// TODO Update game
@@ -72,6 +73,7 @@ public class GameContainer implements Runnable {
 
 				if (render) {
 					renderer.clear();
+					game.render(this, renderer);
 					window.update();
 					frames++;
 				} else {
@@ -89,11 +91,6 @@ public class GameContainer implements Runnable {
 
 	private void dispose() {
 
-	}
-
-	public static void main(String args[]) {
-		GameContainer gc = new GameContainer();
-		gc.start();
 	}
 
 	public boolean isRunning() {
@@ -138,5 +135,9 @@ public class GameContainer implements Runnable {
 
 	public Window getWindow() {
 		return window;
+	}
+
+	public Input getInput() {
+		return input;
 	}
 }
