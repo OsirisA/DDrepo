@@ -5,10 +5,15 @@ import java.awt.event.KeyEvent;
 import com.triton.engine.AbstractGame;
 import com.triton.engine.GameContainer;
 import com.triton.engine.Renderer;
+import com.triton.engine.gfx.Image;
 
 public class GameManager extends AbstractGame {
 
+	private Image image;
+	
 	public GameManager() {
+		image = new Image("/test.png");
+				
 	}
 
 	@Override
@@ -20,7 +25,7 @@ public class GameManager extends AbstractGame {
 
 	@Override
 	public void render(GameContainer gc, Renderer r) {
-
+		r.drawImage(image, gc.getInput().getMouseX(), gc.getInput().getMouseY());
 	}
 	
 	public static void main(String args[]) {
